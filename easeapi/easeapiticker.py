@@ -3,6 +3,7 @@ import time
 import logging
 import threading
 import websocket
+from urllib.parse import urlencode
 
 logger = logging.getLogger(__name__)
 
@@ -44,10 +45,16 @@ class EaseApiTicker:
         self.ws_thread = None
         
         # URL for market data
-        self.market_data_url = f"{self.BASE_WS_URL}{self.MARKET_DATA_PATH}?app_key={app_key}&client_id={client_id}&authorization={auth_token}"
+        market_query = urlencode(
+            {"app_key": app_key, "client_id": client_id, "authorization": auth_token}
+        )
+        self.market_data_url = f"{self.BASE_WS_URL}{self.MARKET_DATA_PATH}?{market_query}"
         
         # URL for order status
-        self.order_status_url = f"{self.BASE_WS_URL}{self.ORDER_STATUS_PATH}?app_key={app_key}&client_id={client_id}&authorization={auth_token}"
+        order_query = urlencode(
+            {"app_key": app_key, "client_id": client_id, "authorization": auth_token}
+        )
+        self.order_status_url = f"{self.BASE_WS_URL}{self.ORDER_STATUS_PATH}?{order_query}"
         
         # By default, we'll connect to market data
         self.ws_url = self.market_data_url
