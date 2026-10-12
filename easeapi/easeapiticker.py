@@ -23,6 +23,7 @@ class EaseApiTicker:
     EXCHANGE_BSE = "bse"
     EXCHANGE_FNO = "fno"  # NSE Futures & Options
     EXCHANGE_BFO = "bfo"  # BSE Futures & Options
+    EXCHANGE_INDEX = "index"  # NSE Indices (e.g. Nifty 50)
     
     def __init__(self, app_key, client_id, auth_token):
         """
@@ -193,7 +194,7 @@ class EaseApiTicker:
     
     def _get_action_key(self, exchange):
         """Generate a key for the LTP action."""
-        if exchange not in [self.EXCHANGE_NSE, self.EXCHANGE_BSE, self.EXCHANGE_FNO, self.EXCHANGE_BFO]:
+        if exchange not in [self.EXCHANGE_NSE, self.EXCHANGE_BSE, self.EXCHANGE_FNO, self.EXCHANGE_BFO, self.EXCHANGE_INDEX]:
             logger.warning(f"Unsupported exchange: {exchange}. Using NSE as default.")
             exchange = self.EXCHANGE_NSE
             
@@ -209,7 +210,7 @@ class EaseApiTicker:
             Single token or list of tokens to subscribe
         exchange : str, optional
             Exchange to subscribe to (default: "nse")
-            Supported exchanges: "nse", "bse", "fno", "bfo"
+            Supported exchanges: "nse", "bse", "fno", "bfo", "index"
         skip_add : bool, optional
             If True, don't update subscriptions list (used for resubscribing)
         
@@ -223,7 +224,7 @@ class EaseApiTicker:
             return False
         
         # Validate exchange
-        if exchange not in [self.EXCHANGE_NSE, self.EXCHANGE_BSE, self.EXCHANGE_FNO, self.EXCHANGE_BFO]:
+        if exchange not in [self.EXCHANGE_NSE, self.EXCHANGE_BSE, self.EXCHANGE_FNO, self.EXCHANGE_BFO, self.EXCHANGE_INDEX]:
             logger.warning(f"Unsupported exchange: {exchange}. Using NSE as default.")
             exchange = self.EXCHANGE_NSE
         
@@ -265,7 +266,7 @@ class EaseApiTicker:
             Single token or list of tokens to unsubscribe
         exchange : str, optional
             Exchange to unsubscribe from (default: "nse")
-            Supported exchanges: "nse", "bse", "fno", "bfo"
+            Supported exchanges: "nse", "bse", "fno", "bfo", "index"
             
         Returns:
         --------
@@ -277,7 +278,7 @@ class EaseApiTicker:
             return False
         
         # Validate exchange
-        if exchange not in [self.EXCHANGE_NSE, self.EXCHANGE_BSE, self.EXCHANGE_FNO, self.EXCHANGE_BFO]:
+        if exchange not in [self.EXCHANGE_NSE, self.EXCHANGE_BSE, self.EXCHANGE_FNO, self.EXCHANGE_BFO, self.EXCHANGE_INDEX]:
             logger.warning(f"Unsupported exchange: {exchange}. Using NSE as default.")
             exchange = self.EXCHANGE_NSE
         

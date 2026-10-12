@@ -4,10 +4,15 @@ from easeapi import EaseApiTicker
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Shared credentials - update these in one place
+APP_KEY = "VUz2rue5R0mYqe3jx5Ic"
+CLIENT_ID = "AA0605"
+AUTH_TOKEN = "eyJraWQiOiIrSzhkR1pWRzhBRCt1bnVLRlFTS1NFOGN4TE1DMXJMaThFMzFSeWRKbkxJPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI4ZmUzYjgwOS1lMjcyLTQ3ODItOTE2Yi0zNDhhZmViZGU4OWUiLCJpc3MiOiJodHRwczovL2NvZ25pdG8taWRwLmFwLXNvdXRoLTEuYW1hem9uYXdzLmNvbS9hcC1zb3V0aC0xX0N3aVo5a0dzdSIsImNsaWVudF9pZCI6IjMwZWU4aW85dGljOTc1b3ZpODdpMnBncGR2Iiwib3JpZ2luX2p0aSI6IjcyZDZjODUxLWIyNTItNDFiMy04YTg0LWExMjg1ZWM5NGJiMSIsImV2ZW50X2lkIjoiZGMwN2YwODQtNDRhMi00NWUwLTljNjQtZWEwYTNmYzc1NWVhIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTc5MTc3NzY0NCwiZXhwIjoxNzkxODY0MDQ0LCJpYXQiOjE3OTE3Nzc2NDQsImp0aSI6IjliN2ViMGE3LWMyN2MtNDEwNi1iZTM5LTU1ZTE4MDc5OGRmNyIsInVzZXJuYW1lIjoiYWEwNjA1In0.fTP9Aw0n9Gw8qmk3CKFHzUKrky7qhAD6gzc-CROttx2q954gvIGSL-qUOFd8ogOfHEHy23FEiqGNOjyF4vO8xdCvxde-85m05fZxHWNsM2fUQu9RZ6wWyBKNU4NK2Op0Xnj4o9H4XgzMxluPtXGgQfH92QPLF2q6cOeb8R6CIkPmdBG0djcvm9XvHr9_sz-qxhEKLvgL5VMAgIW5z8LlbDvdazxwskg5GEP5ObppQTsP2mdQyjuy64Vs2gzka7X2fX0mE8y8D6_DLi2HbAfxFoBt1P35qmAhG9FYrLgH9--NdWTGgW_qtNf7RO2zMMzIEAOtH0MBdRCcM6EVNXhDpw"
+
 ticker = EaseApiTicker(
-    app_key="VUz2rue5R0mYqe3jx5Ic",
-    client_id="AA0605",
-    auth_token="eyJraWQiOiJlMDc0TUpqYnJLTXhEU3lSN2tWY25xY0x1T..."
+    app_key=APP_KEY,
+    client_id=CLIENT_ID,
+    auth_token=AUTH_TOKEN,
 )
 
 def on_ticks(ws, tick_data):
@@ -22,6 +27,7 @@ def on_connect(ws, response):
         # Subscribe to instruments
         ws.subscribe(["2885", "11536"], exchange=ws.EXCHANGE_NSE)  # RELIANCE, TCS on NSE
         ws.subscribe(["500570"], exchange=ws.EXCHANGE_BSE)  # TATAMOTORS on BSE
+        ws.subscribe(["Nifty 50"], exchange=ws.EXCHANGE_INDEX)  # NIFTY 50 index
     
     # For order status connection
     elif ws.ws_url == ws.order_status_url:
@@ -42,9 +48,9 @@ ticker.connect()
 # Example 2: If you want to connect to order status endpoint instead
 # Create a second instance for order status
 order_ticker = EaseApiTicker(
-    app_key="VUz2rue5R0mYqe3jx5Ic",
-    client_id="AA0605",
-    auth_token="eyJraWQiOiJlMDc0TUpqYnJLTXhEU3lSN2tWY2..."
+    app_key=APP_KEY,
+    client_id=CLIENT_ID,
+    auth_token=AUTH_TOKEN,
 )
 
 # Set callbacks for order ticker
